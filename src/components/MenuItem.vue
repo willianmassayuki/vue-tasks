@@ -1,7 +1,9 @@
 <template>
-  <router-link :to="redirectTo" class="text-blue-600 hover:underline">{{
-    title
-  }}</router-link>
+  <router-link
+    :to="redirectTo"
+    class="text-emerald-500 hover:underline hover:text-emerald-600 transition-colors"
+    >{{ title }}</router-link
+  >
 </template>
 
 <script>
