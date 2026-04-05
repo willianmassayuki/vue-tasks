@@ -67,7 +67,7 @@
                 <Lock class="h-5 w-5 text-rocket-gray-400 z-10" />
               </div>
               <input
-                id="user"
+                id="password"
                 name="password"
                 type="password"
                 required
@@ -82,11 +82,14 @@
               <button
                 type="button"
                 class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                @click="togglePasswordVisibility"
               >
                 <Eye
+                  v-if="showPassword"
                   class="h-5 w-5 text-rocket-gray-400 hover:text-rocket-gray-600 dark:hover:text-rocket-gray-300"
                 />
                 <EyeOff
+                  v-else
                   class="h-5 w-5 text-rocket-gray-400 hover:text-rocket-gray-600 dark:hover:text-rocket-gray-300"
                 />
               </button>
@@ -114,6 +117,8 @@
 
 <script>
 import { Eye, EyeOff, Lock, Rocket, LogIn, User } from "lucide-vue-next";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 export default {
   components: {
@@ -123,6 +128,31 @@ export default {
     Rocket,
     LogIn,
     User,
+  },
+  setup() {
+    const router = useRouter();
+    const loading = ref(false);
+    const showPassword = ref(false);
+
+    const form = ref({
+      user: "",
+      password: "",
+    });
+
+    const togglePasswordVisibility = () => {
+      showPassword.value = !showPassword.value;
+      const passwordInput = document.getElementById("password");
+      if (passwordInput) {
+        passwordInput.type = showPassword.value ? "text" : "password";
+      }
+    };
+
+    return {
+      form,
+      loading,
+      showPassword,
+      togglePasswordVisibility,
+    };
   },
 };
 </script>
