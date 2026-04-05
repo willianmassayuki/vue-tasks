@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="redirectTo"
-    class="text-emerald-500 hover:underline hover:text-emerald-600 transition-colors"
+    class="px-6 py-3 text-rocket-purple-500 dark:text-rocket-purple400 font-medium rounded-lg border border-transparent transition-all duration-200 hover:bg-rocket-purple-500 dark:hover:bg-rocket-purple-600 hover:text-white hover:no-underline hover:border-rocket-purple-500 dark:hover:border-rocket-purple-400"
     >{{ title }}</router-link
   >
 </template>
@@ -22,3 +22,9 @@ export default {
   },
 };
 </script>
+
+<!-- <style scoped>
+.router-link-active {
+  @apply bg-rocket-purple-500 dark:bg-rocket-purple-600 text-white border-rocket-purple-500 dark:border-rocket-purple-400;
+}
+</style> -->
