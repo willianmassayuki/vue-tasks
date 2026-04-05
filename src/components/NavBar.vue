@@ -1,6 +1,6 @@
 <template>
   <header
-    class="bg-white dark:bg-rocket-gray-900 border-b border-rocket-gray-200 dark:border-rocket-gray-800 top-0 z-50"
+    class="flex py-3 bg-white dark:bg-rocket-gray-900 border-b border-rocket-gray-200 dark:border-rocket-gray-800 top-0 z-50"
   >
     <div class="flex items-center gap-4">
       <MenuItem redirectTo="/login" title="Login" />
