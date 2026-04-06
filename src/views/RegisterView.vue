@@ -36,7 +36,7 @@
             <label for="username" class="sr-only"> Usuário </label>
             <div class="relative">
               <div
-                class="absolute insert-y-0 left-0 pl-3 flex items-center pointer-events-none z-10"
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10"
               >
                 <User class="h-5 w-5 text-rocket-gray-400" />
               </div>
@@ -60,7 +60,7 @@
             <label for="password" class="sr-only"> Senha </label>
             <div class="relative">
               <div
-                class="absolute insert-y-0 left-0 pl-3 flex items-center pointer-events-none z-10"
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10"
               >
                 <Lock class="h-5 w-5 text-rocket-gray-400" />
               </div>
@@ -121,11 +121,25 @@
 </template>
 
 <script>
-import { Eye, EyeOff, Lock, Rocket, LogIn, User } from "lucide-vue-next";
+import {
+  Eye,
+  EyeOff,
+  Lock,
+  Rocket,
+  LogIn,
+  User,
+  UserPlus,
+} from "lucide-vue-next";
 
 export default {
   components: {
+    Eye,
+    EyeOff,
+    Lock,
     Rocket,
+    LogIn,
+    User,
+    UserPlus,
   },
 };
 </script>

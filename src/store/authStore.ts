@@ -3,14 +3,20 @@ import { ref, computed } from "vue";
 import { authService } from "@/services/authService";
 import { storage } from "@/utils/storage";
 import { useRouter } from "vue-router";
+import type { LoginCredentials, AuthResponse } from "../services/authService";
+
+export interface User {
+  id: number;
+  username: string;
+}
 
 export const useAuthStore = defineStore("auth", () => {
   const router = useRouter();
 
-  const user = ref(null);
-  const token = ref(storage.get("token"));
-  const loading = ref(false);
-  const error = ref(null);
+  const user = ref<User | null>(null);
+  const token = ref<string | null>(storage.get("token"));
+  const loading = ref<boolean>(false);
+  const error = ref<string | null>(null);
 
   const isAuthenticated = computed(() => !!token.value);
   const currentUser = computed(() => user.value);
@@ -18,7 +24,9 @@ export const useAuthStore = defineStore("auth", () => {
   const hasError = computed(() => error.value);
   const userName = computed(() => user.value?.username || "");
 
-  const login = async (credentials) => {
+  const login = async (
+    credentials: LoginCredentials,
+  ): Promise<AuthResponse> => {
     loading.value = true;
     error.value = null;
 
@@ -58,6 +66,32 @@ export const useAuthStore = defineStore("auth", () => {
     if (savedToken && savedUser) {
       token.value = savedToken;
       user.value = JSON.parse(savedUser);
+    }
+  };
+
+  const register = async (
+    credentials: LoginCredentials,
+  ): Promise<AuthResponse> => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await authService.register(credentials);
+      token.value = response.token;
+      user.value = {
+        id: response.userId,
+        username: response.username,
+      };
+
+      storage.set("token", response.token);
+      storage.set("user", JSON.stringify(user.value));
+
+      router.push("/task");
+
+      return response;
+    } catch (err) {
+    } finally {
+      loading.value = false;
     }
   };
 
