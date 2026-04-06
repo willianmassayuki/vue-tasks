@@ -1,7 +1,13 @@
 <template>
-  <form>
+  <form
+    @submit.prevent="handleSubmit"
+    :class="[
+      'bg-white dark:bg-rocket-gray-800 p-6 rounded-lg border border-rocket-gray-200 dark:border-rocket-gray-700',
+    ]"
+  >
     <div class="flex gap-4">
       <input
+        v-model="taskTitle"
         type="text"
         placeholder="Digite o título da tarefa"
         required
@@ -29,11 +35,26 @@
 
 <script>
 import { Plus } from "lucide-vue-next";
+import { ref } from "vue";
 export default {
   name: "TaskForm",
 
   components: {
     Plus,
+  },
+
+  setup() {
+    const taskTitle = ref("");
+    const handleSubmit = () => {
+      if (!taskTitle.value.trim()) return;
+      alert("Submit");
+      taskTitle.value = "";
+    };
+
+    return {
+      taskTitle,
+      handleSubmit,
+    };
   },
 };
 </script>
