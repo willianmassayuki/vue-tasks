@@ -7,7 +7,7 @@
         </h1>
       </div>
 
-      <TaskForm />
+      <TaskForm @submit="handleCreateTask" :loading="tasksStore.loading" />
 
       <div
         v-if="tasksStore.error"
@@ -53,12 +53,21 @@ export default {
   setup() {
     const tasksStore = useTasksStore();
 
+    const handleCreateTask = async (title) => {
+      try {
+        await tasksStore.createTask(title);
+      } catch (err) {
+        console.error("Erro ao criar tarefa: ", err);
+      }
+    };
+
     onMounted(() => {
       tasksStore.loadTasks();
     });
 
     return {
       tasksStore,
+      handleCreateTask,
     };
   },
 };

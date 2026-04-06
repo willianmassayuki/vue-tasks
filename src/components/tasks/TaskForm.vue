@@ -18,6 +18,7 @@
         ]"
       />
       <button
+        :disabled="loading"
         type="submit"
         :class="[
           'px-6 py-3 bg-rocket-purple-500 hover:bg-rocket-purple-600 text-white',
@@ -43,11 +44,20 @@ export default {
     Plus,
   },
 
-  setup() {
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  emits: ["submit"],
+
+  setup(props, { emit }) {
     const taskTitle = ref("");
     const handleSubmit = () => {
       if (!taskTitle.value.trim()) return;
-      alert("Submit");
+      emit("submit", taskTitle.value.trim());
       taskTitle.value = "";
     };
 

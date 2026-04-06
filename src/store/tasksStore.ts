@@ -1,11 +1,36 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { tasksService, type Task } from "../services/tasksService";
 
 export const useTasksStore = defineStore("tasks", () => {
   const tasks = ref<Task[]>([]);
   const error = ref<string | null>(null);
   const loading = ref<boolean>(false);
+
+  const pendindTasks = computed(() => {
+    return tasks.value.filter((task) => !task.done);
+  });
+
+  const completedTasks = computed(() => {
+    return tasks.value.filter((task) => task.done);
+  });
+
+  const toggleTask = async (id: number, done: boolean): Promise<Task> => {
+    try {
+      const updatedTask = await tasksService.update(id, { done });
+      const index = tasks.value.findIndex((t) => t.id === id);
+      if (index !== -1) {
+        tasks.value[index] = updatedTask;
+      }
+      return updatedTask;
+    } catch (err) {
+      const axiosError = err as { response?: { data?: { message?: string } } };
+      error.value =
+        axiosError.response?.data?.message || "Erro ao atualizar tarefa";
+      console.error("Erro ao atualizar tarefa:", err);
+      throw err;
+    }
+  };
 
   const loadTasks = async (): Promise<void> => {
     try {
@@ -95,6 +120,9 @@ export const useTasksStore = defineStore("tasks", () => {
   };
 
   return {
+    pendindTasks,
+    completedTasks,
+    toggleTask,
     loadTasks,
     createTask,
     updateTask,
