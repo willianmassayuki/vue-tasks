@@ -30,7 +30,7 @@
         </p>
       </div>
 
-      <form class="mt-8 space-y-6">
+      <form class="mt-8 space-y-6" @submit.prevent="handleRegister">
         <div class="space-y-4">
           <div>
             <label for="username" class="sr-only"> Usuário </label>
@@ -41,6 +41,7 @@
                 <User class="h-5 w-5 text-rocket-gray-400" />
               </div>
               <input
+                v-model="form.username"
                 id="username"
                 name="username"
                 type="text"
@@ -65,6 +66,7 @@
                 <Lock class="h-5 w-5 text-rocket-gray-400" />
               </div>
               <input
+                v-model="form.password"
                 id="password"
                 name="password"
                 type="password"
@@ -83,7 +85,7 @@
                 @click="togglePasswordVisibility"
               >
                 <Eye
-                  v-if="true"
+                  v-if="showPassword"
                   class="h-5 w-5 text-rocket-gray-400 hover:text-rocket-gray-600 dark:hover:text-rocket-gray-300"
                 />
                 <EyeOff
@@ -111,10 +113,10 @@
       </form>
 
       <div
-        v-if="true"
+        v-if="authStore.error"
         class="bg-red-300 text-red-600 p-4 text-center font-bold rounded-lg"
       >
-        <p>{ authStore?.error }</p>
+        <p>{{ authStore?.error }}</p>
       </div>
     </div>
   </div>
@@ -130,6 +132,9 @@ import {
   User,
   UserPlus,
 } from "lucide-vue-next";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "../store/authStore";
+import { ref } from "vue";
 
 export default {
   components: {
@@ -140,6 +145,41 @@ export default {
     LogIn,
     User,
     UserPlus,
+  },
+
+  setup() {
+    const router = useRouter();
+    const showPassword = ref(false);
+    const authStore = useAuthStore();
+
+    const form = ref({
+      username: "",
+      password: "",
+    });
+
+    const togglePasswordVisibility = () => {
+      showPassword.value = !showPassword.value;
+      const passwordInput = document.getElementById("password");
+      if (passwordInput) {
+        passwordInput.type = showPassword.value ? "text" : "password";
+      }
+    };
+
+    const handleRegister = async () => {
+      try {
+        await authStore.register(form.value);
+      } catch (error) {
+        console.log("Erro capturado:", error);
+      }
+    };
+
+    return {
+      togglePasswordVisibility,
+      showPassword,
+      form,
+      handleRegister,
+      authStore,
+    };
   },
 };
 </script>

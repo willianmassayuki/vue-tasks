@@ -17,10 +17,10 @@ export const authService = {
     return response.data;
   },
 
-  async register(credentiais: LoginCredentials): Promise<AuthResponse> {
+  async register(credentials: LoginCredentials): Promise<AuthResponse> {
     const response = await api.post<AuthResponse>(
       "/auth/register",
-      credentiais,
+      credentials,
     );
     return response.data;
   },

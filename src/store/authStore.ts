@@ -90,7 +90,7 @@ export const useAuthStore = defineStore("auth", () => {
       storage.set("token", response.token);
       storage.set("user", JSON.stringify(user.value));
 
-      router.push("/task");
+      router.push("/tasks");
 
       return response;
     } catch (err) {
@@ -108,6 +108,15 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const logout = (): void => {
+    token.value = null;
+    user.value = null;
+    error.value = null;
+    storage.remove("token");
+    storage.remove("user");
+    router.push("/login");
+  };
+
   return {
     user,
     token,
@@ -121,5 +130,6 @@ export const useAuthStore = defineStore("auth", () => {
     login,
     checkAuth,
     register,
+    logout,
   };
 });

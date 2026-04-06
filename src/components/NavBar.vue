@@ -20,6 +20,15 @@
 
       <MenuItem v-if="isAuthenticated" redirectTo="/tasks" title="Tarefas" />
     </div>
+
+    <button
+      @click="handleLogout"
+      v-if="isAuthenticated"
+      class="px-4 py-2 rounded-lg text-rocket-gray-600 dark:text-rocket-gray-300 bg-transparent border border-rocket-gray-200 dark:border-rocket-gray-800 cursor-pointer transition-all durantion-200 font-medium hover:bg-rocket-gray-50 dark:hover:bg-rocket-gray-800 hover:text-rocket-purple-500 dark:hover:text-rocket-purple-400"
+    >
+      Sair
+    </button>
+
     <button
       @click="toggleTheme"
       class="px-4 py-2 rounded-lg text-rocket-gray-600 dark:text-rocket-gray-300 bg-transparent border border-rocket-gray-200 dark:border-rocket-gray-800 cursor-pointer transition-all durantion-200 font-medium hover:bg-rocket-gray-50 dark:hover:bg-rocket-gray-800 hover:text-rocket-purple-500 dark:hover:text-rocket-purple-400"
@@ -50,11 +59,16 @@ export default {
     const isAuthenticated = computed(() => authStore.isAuthenticated);
     const username = computed(() => authStore.userName);
 
+    const handleLogout = () => {
+      authStore.logout();
+    };
+
     return {
       isDark,
       toggleTheme,
       isAuthenticated,
       username,
+      handleLogout,
     };
   },
 };
