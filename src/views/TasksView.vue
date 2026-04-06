@@ -1,7 +1,37 @@
 <template>
-  <h1>Página de tarefas</h1>
+  <div>
+    <div class="max-w-4xl mx-auto space-y-6">
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold text-rocket-gray-900 dark:text-white">
+          Minhas Tarefas
+        </h1>
+      </div>
+
+      <h2>Formulario de criação de tarefas</h2>
+
+      <div class="bg-red-300 text-red-600 p-4 text-center font-bold rounded-lg">
+        <p>Quando houver um erro, vai aparecer aqui</p>
+      </div>
+
+      <div class="text-center py-8">
+        <p class="text-rocket-gray-600 dark:text-rocket-gray-400">
+          Carregando tarefas...
+        </p>
+      </div>
+
+      <div class="text-center py-8">
+        <p class="text-rocket-gray-600 dark:text-rocket-gray-400">
+          Nenhuma tarefa cadastrada ainda.
+        </p>
+      </div>
+
+      <div>
+        <p>Aqui serão exibidas as tarefas</p>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script lang="ts" setup></script>
+<script></script>
 
 <style></style>
