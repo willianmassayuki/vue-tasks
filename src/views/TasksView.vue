@@ -7,7 +7,7 @@
         </h1>
       </div>
 
-      <h2>Formulario de criação de tarefas</h2>
+      <TaskForm />
 
       <div class="bg-red-300 text-red-600 p-4 text-center font-bold rounded-lg">
         <p>Quando houver um erro, vai aparecer aqui</p>
@@ -32,6 +32,16 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import TaskForm from "../components/tasks/TaskForm.vue";
+
+export default {
+  name: "TaskView",
+
+  components: {
+    TaskForm,
+  },
+};
+</script>
 
 <style></style>
