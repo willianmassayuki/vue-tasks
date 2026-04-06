@@ -1,8 +1,13 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { storage } from "@/utils/storage";
 
+export interface AuthError extends Error {
+  response?: unknown;
+  isAuthError?: boolean;
+}
+
 export const api = axios.create({
-  baseUrl: "http://localhost:3000/api",
+  baseURL: "http://localhost:3000/api",
   timeout: 10000,
 });
 
@@ -21,11 +26,12 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  (error: AxiosError) => {
     if (error.response?.status === 401) {
-      Store.remove("token");
+      storage.remove("token");
       storage.remove("user");
-      const authError = new Error("Usuário e/ou senha inválidos!");
+
+      const authError: AuthError = new Error("Usuário e/ou senha inválidos!");
       authError.response = error.response;
       authError.isAuthError = true;
 

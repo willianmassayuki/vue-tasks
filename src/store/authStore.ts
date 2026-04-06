@@ -4,6 +4,7 @@ import { authService } from "@/services/authService";
 import { storage } from "@/utils/storage";
 import { useRouter } from "vue-router";
 import type { LoginCredentials, AuthResponse } from "../services/authService";
+import type { AuthError } from "../services/api";
 
 export interface User {
   id: number;
@@ -46,14 +47,17 @@ export const useAuthStore = defineStore("auth", () => {
 
       return response;
     } catch (err) {
-      if (err.isAuthError) {
-        error.value = err.message;
-        throw err;
+      const authErr = err as AuthError;
+
+      if (authErr.isAuthError) {
+        error.value = authErr.message;
+        throw authErr;
       }
 
-      error.value = err.response?.data?.message || "Erro ao fazer o login";
-      console.error("Erro ao fazer o login:", err);
-      throw err;
+      error.value =
+        (authErr.response as { data?: { message?: string } })?.data?.message ||
+        "Erro ao fazer login";
+      throw authErr;
     } finally {
       loading.value = false;
     }
@@ -90,6 +94,15 @@ export const useAuthStore = defineStore("auth", () => {
 
       return response;
     } catch (err) {
+      const authErr = err as AuthError;
+      if (authErr.isAuthError) {
+        error.value = authErr.message;
+        throw authErr;
+      }
+      error.value =
+        (authErr.response as { data?: { message?: string } })?.data?.message ||
+        "Erro ao criar conta";
+      throw authErr;
     } finally {
       loading.value = false;
     }
@@ -107,5 +120,6 @@ export const useAuthStore = defineStore("auth", () => {
     userName,
     login,
     checkAuth,
+    register,
   };
 });
