@@ -5,7 +5,7 @@
       'bg-white dark:bg-rocket-gray-800 p-6 rounded-lg border border-rocket-gray-200 dark:border-rocket-gray-700',
     ]"
   >
-    <div class="flex gap-4">
+    <div class="flex gap-4 max-md:flex-col">
       <input
         v-model="taskTitle"
         type="text"

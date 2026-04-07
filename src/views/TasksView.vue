@@ -31,7 +31,7 @@
         </p>
       </div>
 
-      <div v-else>
+      <div v-else class="flex flex-col gap-6">
         <TaskList
           title="Pendentes"
           :tasks="tasksStore.pendindTasks"

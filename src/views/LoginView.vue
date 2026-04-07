@@ -8,7 +8,8 @@
     <div class="max-w-md w-full space-y-8">
       <div class="text-center">
         <div class="flex justify-center items-center gap-2 mb-6">
-          <Rocket class="w-5 h-5 text-rocket-purple-400" />
+          <Rocket class="w-8 h-8 text-rocket-purple-500" />
+
           <h1 class="text-3xl font-bold text-rocket-gray-900 dark:text-white">
             RocketTasks
           </h1>
@@ -16,9 +17,7 @@
         <h2 class="text-2xl font-bold text-rocket-gray-900 dark:text-white">
           Entre na sua conta
         </h2>
-        <p
-          class="mt-2 text-sm text-rocket-rocket-gray-600 dark:text-rocket-gray-400"
-        >
+        <p class="mt-2 text-sm text-rocket-gray-600 dark:text-rocket-gray-400">
           Ou
           <router-link
             to="/register"

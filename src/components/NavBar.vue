@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex py-3 bg-white dark:bg-rocket-gray-900 border-b border-rocket-gray-200 dark:border-rocket-gray-800 top-0 z-50"
+    class="flex justify-between gap-4 py-3 px-4 bg-white dark:bg-rocket-gray-900 border-b border-rocket-gray-200 dark:border-rocket-gray-800 top-0 z-50 max-md:flex-col"
   >
     <div class="flex items-center gap-4">
       <Rocket class="ml-4 w-5 h-5 text-rocket-purple-400" />
@@ -21,20 +21,23 @@
       <MenuItem v-if="isAuthenticated" redirectTo="/tasks" title="Tarefas" />
     </div>
 
-    <button
-      @click="handleLogout"
-      v-if="isAuthenticated"
-      class="px-4 py-2 rounded-lg text-rocket-gray-600 dark:text-rocket-gray-300 bg-transparent border border-rocket-gray-200 dark:border-rocket-gray-800 cursor-pointer transition-all durantion-200 font-medium hover:bg-rocket-gray-50 dark:hover:bg-rocket-gray-800 hover:text-rocket-purple-500 dark:hover:text-rocket-purple-400"
-    >
-      Sair
-    </button>
+    <div class="flex gap-4">
+      <button
+        @click="handleLogout"
+        v-if="isAuthenticated"
+        class="px-4 py-2 rounded-lg text-rocket-gray-600 dark:text-rocket-gray-300 bg-transparent border border-rocket-gray-200 dark:border-rocket-gray-800 cursor-pointer transition-all durantion-200 font-medium hover:bg-rocket-gray-50 dark:hover:bg-rocket-gray-800 hover:text-red-500 dark:hover:text-red-400"
+      >
+        Sair
+      </button>
 
-    <button
-      @click="toggleTheme"
-      class="px-4 py-2 rounded-lg text-rocket-gray-600 dark:text-rocket-gray-300 bg-transparent border border-rocket-gray-200 dark:border-rocket-gray-800 cursor-pointer transition-all durantion-200 font-medium hover:bg-rocket-gray-50 dark:hover:bg-rocket-gray-800 hover:text-rocket-purple-500 dark:hover:text-rocket-purple-400"
-    >
-      {{ isDark ? "Modo Claro" : "Modo Escuro" }}
-    </button>
+      <button
+        @click="toggleTheme"
+        class="px-4 py-2 rounded-lg text-rocket-gray-600 dark:text-rocket-gray-300 bg-transparent border border-rocket-gray-200 dark:border-rocket-gray-800 cursor-pointer transition-all durantion-200 font-medium hover:bg-rocket-gray-50 dark:hover:bg-rocket-gray-800 hover:text-rocket-purple-500 dark:hover:text-rocket-purple-400"
+      >
+        <SunIcon v-if="isDark" class="w-5 h-5" />
+        <MoonIcon v-else class="w-5 h-5" />
+      </button>
+    </div>
   </header>
 </template>
 
@@ -43,7 +46,7 @@ import { computed } from "vue";
 import { useAuthStore } from "../store/authStore";
 import MenuItem from "./MenuItem.vue";
 import { useTheme } from "@/composables/useTheme";
-import { Rocket } from "lucide-vue-next";
+import { MoonIcon, Rocket, SunIcon } from "lucide-vue-next";
 
 export default {
   name: "NavBar",
@@ -51,6 +54,8 @@ export default {
   components: {
     MenuItem,
     Rocket,
+    SunIcon,
+    MoonIcon,
   },
   setup() {
     const { isDark, toggleTheme } = useTheme();
