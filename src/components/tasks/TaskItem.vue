@@ -75,6 +75,16 @@ import { computed } from 'vue';
       >
         <Edit class="w-5 h-5" />
       </button>
+
+      <button
+        :class="[
+          'p-2 bg-rocket-gray-100 dark:bg-rocket-gray-700 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30',
+          'rounded transition-colors cursor-pointer',
+        ]"
+        @click="handleDeleteTask"
+      >
+        <Trash class="w-5 h-5" />
+      </button>
     </div>
   </div>
 </template>
@@ -82,12 +92,14 @@ import { computed } from 'vue';
 <script>
 import { ref, computed } from "vue";
 import { useTasksStore } from "../../store/tasksStore";
-import { Edit } from "lucide-vue-next";
+import { Edit, Trash } from "lucide-vue-next";
+import Swal from "sweetalert2";
 
 export default {
   name: "TaskItem",
   components: {
     Edit,
+    Trash,
   },
 
   props: {
@@ -137,6 +149,36 @@ export default {
       }
     };
 
+    const handleDeleteTask = async () => {
+      try {
+        const result = await Swal.fire({
+          title: "Excluir Tarefa?",
+          text: "Esta ação não pode ser desfeita.",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#8257e6",
+          cancelButtonColor: "#737380",
+          cancelButtonText: "Cancelar",
+        });
+
+        if (result.isConfirmed) {
+          tasksStore.deleteTask(props.task.id);
+
+          Swal.fire({
+            title: "Excluir Tarefa",
+            text: "A tarefa foi removida com sucesso!",
+            icon: "success",
+          });
+        }
+      } catch (err) {
+        Swal.fire({
+          title: "Excluir Tarefa",
+          text: "Ocorreu um erro ao excluir a tarefa!",
+          icon: "error",
+        });
+      }
+    };
+
     return {
       handleToggleTask,
       isEditing,
@@ -144,6 +186,7 @@ export default {
       editingTitle,
       cancelTaskEdit,
       saveTaskEdit,
+      handleDeleteTask,
     };
   },
 };
