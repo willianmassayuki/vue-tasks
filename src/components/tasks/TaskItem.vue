@@ -1,7 +1,13 @@
 import { computed } from 'vue';
 <template>
-  <div>
-    <label>
+  <div
+    :class="[
+      'bg-white dark:bg-rocket-gray-800 p-4 rounded-lg border border-rocket-gray-200 dark:border-rocket-gray-700',
+      'flex items-center gap-4 transition-all',
+      task.done ? 'opacity-60' : '',
+    ]"
+  >
+    <label class="relative inline-flex item-center cursor-pointer">
       <input
         type="checkbox"
         :checked="task.done"
@@ -33,8 +39,17 @@ import { computed } from 'vue';
         </svg>
       </div>
     </label>
-    <div>
-      <p>{{ task.title }}</p>
+    <div class="flex-1">
+      <p
+        :class="[
+          'cursor-pointer select-none',
+          task.done
+            ? 'line-through text-rocket-gray-500 dark:text-rocket-gray-300'
+            : 'text-rocket-gray-900 dark:text-white',
+        ]"
+      >
+        {{ task.title }}
+      </p>
     </div>
   </div>
 </template>
