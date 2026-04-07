@@ -89,8 +89,18 @@ export default {
       tasksStore.setEditingTask(null);
     };
 
-    const saveTaskEdit = () => {
-      alert("save");
+    const saveTaskEdit = async () => {
+      try {
+        if (!editingTitle.value.trim()) {
+          cancelTaskEdit();
+          return;
+        }
+        await tasksStore.updateTask(props.task.id, editingTitle.value);
+      } catch (err) {
+        console.error("Erro ao atualizar a tarefa: ", err);
+      } finally {
+        cancelTaskEdit();
+      }
     };
 
     const isEditing = computed(
