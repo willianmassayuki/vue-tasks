@@ -7,6 +7,8 @@ export const useTasksStore = defineStore("tasks", () => {
   const error = ref<string | null>(null);
   const loading = ref<boolean>(false);
   const editingTaskId = ref<number | null>(null);
+  const draggedTaskId = ref<number | null>(null);
+  const dragOverTarget = ref<string | null>(null);
 
   const pendindTasks = computed(() => {
     return tasks.value.filter((task) => !task.done);
@@ -128,6 +130,42 @@ export const useTasksStore = defineStore("tasks", () => {
     }
   };
 
+  // Qual task
+  const setDraggedTask = (task: Task): void => {
+    draggedTaskId.value = task.id;
+  };
+
+  // Para onde
+  const setDragOverTarget = (target: string | null): void => {
+    dragOverTarget.value = target;
+  };
+
+  // Quando soltar limpar
+  const clearDraggedTask = (): void => {
+    draggedTaskId.value = null;
+    dragOverTarget.value = null;
+  };
+
+  const handleDrop = async (
+    taskId: number,
+    targetDone: boolean,
+  ): Promise<void> => {
+    const task = tasks.valueOf.find((t) => t.id === taskId);
+
+    if (!task || task.done === targetDone) {
+      clearDraggedTask();
+      return;
+    }
+
+    try {
+      await toggleTask(taskId, targetDone);
+    } catch (err) {
+      console.error("Erro ao mover a tarefa: ", err);
+    } finally {
+      clearDraggedTask();
+    }
+  };
+
   return {
     pendindTasks,
     completedTasks,
@@ -141,5 +179,11 @@ export const useTasksStore = defineStore("tasks", () => {
     error,
     loading,
     tasks,
+    setDragOverTarget,
+    setDraggedTask,
+    handleDrop,
+    clearDraggedTask,
+    draggedTaskId,
+    dragOverTarget,
   };
 });
