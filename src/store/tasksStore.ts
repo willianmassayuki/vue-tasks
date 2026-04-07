@@ -150,7 +150,7 @@ export const useTasksStore = defineStore("tasks", () => {
     taskId: number,
     targetDone: boolean,
   ): Promise<void> => {
-    const task = tasks.valueOf.find((t) => t.id === taskId);
+    const task = tasks.value.find((t) => t.id === taskId);
 
     if (!task || task.done === targetDone) {
       clearDraggedTask();

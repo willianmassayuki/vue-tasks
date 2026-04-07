@@ -1,9 +1,13 @@
 import { computed } from 'vue';
 <template>
   <div
+    draggable="true"
+    @dragstart="handleDragStart"
+    @dragend="clearDraggedTask"
     :class="[
       'bg-white dark:bg-rocket-gray-800 p-4 rounded-lg border border-rocket-gray-200 dark:border-rocket-gray-700',
       'flex items-center gap-4 transition-all',
+      draggedTaskId === task.id ? 'opacity-50' : 'hover:shadow-md',
       task.done ? 'opacity-60' : '',
     ]"
   >
@@ -179,6 +183,18 @@ export default {
       }
     };
 
+    const handleDragStart = (event) => {
+      tasksStore.setDraggedTask(props.task.id);
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/plain", props.task.id.toString());
+    };
+
+    const draggedTaskId = tasksStore.draggedTaskId;
+
+    const clearDraggedTask = () => {
+      tasksStore.clearDraggedTask();
+    };
+
     return {
       handleToggleTask,
       isEditing,
@@ -187,6 +203,9 @@ export default {
       cancelTaskEdit,
       saveTaskEdit,
       handleDeleteTask,
+      handleDragStart,
+      draggedTaskId,
+      clearDraggedTask,
     };
   },
 };

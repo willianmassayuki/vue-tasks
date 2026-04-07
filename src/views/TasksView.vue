@@ -32,8 +32,16 @@
       </div>
 
       <div v-else>
-        <TaskList title="Pendentes" :tasks="tasksStore.pendindTasks" />
-        <TaskList title="Concluídas" :tasks="tasksStore.completedTasks" />
+        <TaskList
+          title="Pendentes"
+          :tasks="tasksStore.pendindTasks"
+          drop-zone="pending"
+        />
+        <TaskList
+          title="Concluídas"
+          :tasks="tasksStore.completedTasks"
+          drop-zone="completed"
+        />
       </div>
     </div>
   </div>
