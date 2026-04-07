@@ -32,8 +32,16 @@
       </div>
 
       <div v-else>
-        <TaskList title="Pendentes" />
-        <TaskList title="Concluídas" />
+        <TaskList
+          title="Pendentes"
+          :tasks="tasksStore.pendindTasks"
+          @toggle="handleToggleTask"
+        />
+        <TaskList
+          title="Concluídas"
+          :tasks="tasksStore.completedTasks"
+          @toggle="handleToggleTask"
+        />
       </div>
     </div>
   </div>
@@ -64,6 +72,14 @@ export default {
       }
     };
 
+    const handleToggleTask = async (id, done) => {
+      try {
+        await tasksStore.toggleTask(id, done);
+      } catch (err) {
+        console.error("Erro ao atualizar a  tarefa: ", err);
+      }
+    };
+
     onMounted(() => {
       tasksStore.loadTasks();
     });
@@ -71,6 +87,7 @@ export default {
     return {
       tasksStore,
       handleCreateTask,
+      handleToggleTask,
     };
   },
 };
