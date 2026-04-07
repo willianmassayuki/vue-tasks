@@ -6,4 +6,4 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 
 # vue-tasks
 
-[Live preview](https://vue-tasks-h76etyzff-willianmassayukis-projects.vercel.app/):
+[Live preview](https://vue-tasks-h76etyzff-willianmassayukis-projects.vercel.app/)
