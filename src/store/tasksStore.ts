@@ -6,6 +6,7 @@ export const useTasksStore = defineStore("tasks", () => {
   const tasks = ref<Task[]>([]);
   const error = ref<string | null>(null);
   const loading = ref<boolean>(false);
+  const editingTaskId = ref<number | null>(null);
 
   const pendindTasks = computed(() => {
     return tasks.value.filter((task) => !task.done);
@@ -29,6 +30,14 @@ export const useTasksStore = defineStore("tasks", () => {
         axiosError.response?.data?.message || "Erro ao atualizar tarefa";
       console.error("Erro ao atualizar tarefa:", err);
       throw err;
+    }
+  };
+
+  const setEditingTask = (task: Task | null): void => {
+    editingTaskId.value = null;
+
+    if (task) {
+      editingTaskId.value = task.id;
     }
   };
 
@@ -127,6 +136,8 @@ export const useTasksStore = defineStore("tasks", () => {
     createTask,
     updateTask,
     deleteTask,
+    editingTaskId,
+    setEditingTask,
     error,
     loading,
     tasks,

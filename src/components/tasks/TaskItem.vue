@@ -40,7 +40,15 @@ import { computed } from 'vue';
       </div>
     </label>
     <div class="flex-1">
+      <input
+        v-if="isEditing"
+        v-model="editingTitle"
+        @keyup.esc="cancelTaskEdit"
+        @keyup.enter="saveTaskEdit"
+      />
       <p
+        v-else
+        @dblclick="editingTask"
         :class="[
           'cursor-pointer select-none',
           task.done
@@ -68,11 +76,26 @@ export default {
   },
 
   setup(props) {
+    const editingTitle = ref("");
     const tasksStore = useTasksStore();
 
-    // const handleToggle = () => {
-    //   emit("toggle", props.task.id, !props.task.done);
-    // };
+    const editingTask = () => {
+      editingTitle.value = props.task.title;
+      tasksStore.setEditingTask(props.task);
+    };
+
+    const cancelTaskEdit = () => {
+      editingTitle.value = "";
+      tasksStore.setEditingTask(null);
+    };
+
+    const saveTaskEdit = () => {
+      alert("save");
+    };
+
+    const isEditing = computed(
+      () => tasksStore.editingTaskId === props.task.id,
+    );
 
     const handleToggleTask = async () => {
       try {
@@ -83,8 +106,12 @@ export default {
     };
 
     return {
-      // handleToggle,
       handleToggleTask,
+      isEditing,
+      editingTask,
+      editingTitle,
+      cancelTaskEdit,
+      saveTaskEdit,
     };
   },
 };
