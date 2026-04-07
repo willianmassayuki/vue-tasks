@@ -45,6 +45,11 @@ import { computed } from 'vue';
         v-model="editingTitle"
         @keyup.esc="cancelTaskEdit"
         @keyup.enter="saveTaskEdit"
+        :class="[
+          'w-full px-3 py-2 border border-rocket-gray-300 dark:border-rocket-gray-700',
+          'rounded bg-white dark:bg-rocket-gray-800 text-rocket-gray-900 dark:text-white',
+          'focus:outline-none focus:ring-rocket-purple-500 focus:border-rocket-purple-500',
+        ]"
       />
       <p
         v-else
@@ -59,15 +64,32 @@ import { computed } from 'vue';
         {{ task.title }}
       </p>
     </div>
+    <div class="flex gap-2">
+      <button
+        v-if="!isEditing"
+        @click="editingTask"
+        :class="[
+          'p-2 bg-rocket-gray-100 dark:bg-rocket-gray-700 text-rocket-purple-500 hover:bg-rocket-purple-400',
+          'dark:hover:bg-rocket-purple-900/30 rounded transition-colors cursor-pointer',
+        ]"
+      >
+        <Edit class="w-5 h-5" />
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 import { ref, computed } from "vue";
 import { useTasksStore } from "../../store/tasksStore";
+import { Edit } from "lucide-vue-next";
 
 export default {
   name: "TaskItem",
+  components: {
+    Edit,
+  },
+
   props: {
     task: {
       type: Object,
