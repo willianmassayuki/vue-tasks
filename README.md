@@ -64,6 +64,17 @@ Este projeto aplica conceitos aprendidos no curso de Vue.js em um contexto prát
 - **Integração com API**: Serviços para comunicação com backend (`tasksService.ts`, `authService.ts`)
 - **Componentização**: Estrutura modular com componentes reutilizáveis (`TaskItem.vue`, `TaskForm.vue`)
 
+### Evidências em Código
+
+- **refactor: cleaning emits**: ([link para commit](https://github.com/willianmassayuki/vue-tasks/commit/b0645b9065ebd56f67962e913bf1570de51bb4b6))
+
+Antes: Propriedades e funções passando de pai para filho;
+Depois: Refatoração para usar o estado global.
+
+Essa alteração visa evitar trabalho e repetição na criação e manutenção de componentes.
+
+[Link para certificado](https://exemplo.com/certificado) - Curso concluído: Desenvolvimento com Vue 3 e TypeScript.
+
 ## Live Preview
 
 [Visualizar aplicação](https://vue-tasks-h76etyzff-willianmassayukis-projects.vercel.app/)
