@@ -6,7 +6,7 @@ import { computed } from 'vue';
         type="checkbox"
         :checked="task.done"
         class="sr-only peer"
-        @change="handleToggle"
+        @change="handleToggleTask"
       />
       <div
         :class="[
@@ -41,6 +41,7 @@ import { computed } from 'vue';
 
 <script>
 import { ref, computed } from "vue";
+import { useTasksStore } from "../../store/tasksStore";
 
 export default {
   name: "TaskItem",
@@ -51,15 +52,24 @@ export default {
     },
   },
 
-  emits: ["toggle"],
+  setup(props) {
+    const tasksStore = useTasksStore();
 
-  setup(props, { emit }) {
-    const handleToggle = () => {
-      emit("toggle", props.task.id, !props.task.done);
+    // const handleToggle = () => {
+    //   emit("toggle", props.task.id, !props.task.done);
+    // };
+
+    const handleToggleTask = async () => {
+      try {
+        await tasksStore.toggleTask(props.task.id, !props.task.done);
+      } catch (err) {
+        console.error("Erro ao atualizar a  tarefa: ", err);
+      }
     };
 
     return {
-      handleToggle,
+      // handleToggle,
+      handleToggleTask,
     };
   },
 };

@@ -4,12 +4,7 @@
       {{ title }}
     </h2>
     <div class="space-y-3 min-h-[100px]">
-      <TaskItem
-        v-for="item in tasks"
-        :key="item.id"
-        :task="item"
-        @toggle="(id, done) => $emit('toggle', id, done)"
-      />
+      <TaskItem v-for="item in tasks" :key="item.id" :task="item" />
     </div>
   </div>
 </template>
@@ -32,6 +27,5 @@ export default {
       required: true,
     },
   },
-  emits: ["toggle"],
 };
 </script>
