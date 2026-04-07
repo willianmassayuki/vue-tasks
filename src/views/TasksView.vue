@@ -32,7 +32,8 @@
       </div>
 
       <div v-else>
-        <p>Aqui serão exibidas as tarefas</p>
+        <TaskList title="Pendentes" />
+        <TaskList title="Concluídas" />
       </div>
     </div>
   </div>
@@ -42,12 +43,14 @@
 import { onMounted } from "vue";
 import TaskForm from "../components/tasks/TaskForm.vue";
 import { useTasksStore } from "../store/tasksStore";
+import TaskList from "../components/tasks/TaskList.vue";
 
 export default {
   name: "TaskView",
 
   components: {
     TaskForm,
+    TaskList,
   },
 
   setup() {
