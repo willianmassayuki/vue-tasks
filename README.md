@@ -73,8 +73,6 @@ Depois: Refatoração para usar o estado global.
 
 Essa alteração visa evitar trabalho e repetição na criação e manutenção de componentes.
 
-[Link para certificado](https://exemplo.com/certificado) - Curso concluído: Desenvolvimento com Vue 3 e TypeScript.
-
 ## Live Preview
 
 [Visualizar aplicação](https://vue-tasks-h76etyzff-willianmassayukis-projects.vercel.app/)
